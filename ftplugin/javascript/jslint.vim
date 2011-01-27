@@ -19,12 +19,11 @@ else
 	let s:install_dir = expand("<sfile>:p:h")
 endif
 
-au BufLeave <buffer> call s:JSLintClear()
-
-au BufEnter <buffer> call s:JSLint()
-au InsertLeave <buffer> call s:JSLint()
+"au BufLeave <buffer> call s:JSLintClear()
+"au BufEnter <buffer> call s:JSLint()
+"au InsertLeave <buffer> call s:JSLint()
 "au InsertEnter <buffer> call s:JSLint()
-au BufWritePost <buffer> call s:JSLint()
+"au BufWritePost <buffer> call s:JSLint()
 
 " due to http://tech.groups.yahoo.com/group/vimdev/message/52115
 if(!has("win32") || v:version>702)
@@ -51,10 +50,10 @@ if !exists(":JSLintUpdate")
     command JSLintUpdate :call s:JSLintUpdate()
 endif
 
-noremap <buffer><silent> dd dd:JSLintUpdate<CR>
-noremap <buffer><silent> dw dw:JSLintUpdate<CR>
-noremap <buffer><silent> u u:JSLintUpdate<CR>
-noremap <buffer><silent> <C-R> <C-R>:JSLintUpdate<CR>
+"noremap <buffer><silent> dd dd:JSLintUpdate<CR>
+"noremap <buffer><silent> dw dw:JSLintUpdate<CR>
+"noremap <buffer><silent> u u:JSLintUpdate<CR>
+"noremap <buffer><silent> <C-R> <C-R>:JSLintUpdate<CR>
 
 " Set up command and parameters
 if has("win32")
@@ -185,3 +184,10 @@ if !exists("*s:GetJSLintMessage")
     endfunction
 endif
 
+" Open JSLink function to the outside world
+if !exists("JSLint")
+    function JSLint()
+        silent call s:JSLint()
+        call s:GetJSLintMessage()
+    endfunction
+endif
